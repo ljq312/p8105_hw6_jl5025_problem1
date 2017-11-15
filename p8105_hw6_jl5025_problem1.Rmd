@@ -12,19 +12,46 @@ library(forcats)
 library(viridis)
 library(plotly)
 library(readr)
+library(dplyr)
+library(tidytext)
 ```
-### Problem 1
+## Problem 1
 -----------------------------------------------------------------------
-```{r load data}
+```{r}
+### load data
 nyc_inspections <- read_csv("./data/DOHMH_New_York_City_Restaurant_Inspection_Results.csv.gz", 
                            col_types = cols(building = col_character()),
                            na = c("NA", "N/A")) %>% 
-  mutate(boro = str_to_title(boro))
+  filter(grade %in% c("A", "B", "C"),
+         boro != "Missing") %>% 
+  mutate(boro = str_to_title(boro),
+         inspection_num = row_number()) %>%
+  select(inspection_num, boro, grade, score, critical_flag, dba, cuisine_description, zipcode, violation_description)
 ```
 
 ```{r}
+### Plot 1: Plotly bar graph
+box_data <- nyc_inspections %>% 
+  group_by(boro, grade) %>% 
+  summarize(n = n()) %>% 
+  spread(key = grade, value = n)
+  
+bar_ggplot <- nyc_inspections %>% 
+ # mutate(boro = fct_reorder(boro, score)) %>% 
+  ggplot(aes(x = boro, fill = grade)) +
+    geom_bar() +
+    labs(title = "")
+  
+ggplotly(bar_ggplot)
 
 ```
 
+```{r}
+### Plot 2:
+```
+
+```{r}
+### Plot 3:
+```
 
 
