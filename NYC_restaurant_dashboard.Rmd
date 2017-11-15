@@ -48,15 +48,22 @@ ggplotly(bar_ggplot)
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart B
+### The summary of "score" for each boro
 
 ```{r}
-
+nyc_inspections %>% 
+  mutate(boro = fct_reorder(boro, score)) %>% 
+  plot_ly(y =~ score, color =~ boro, type = "box", colors = "Set1")
 ```
 
-### Chart C
+### The number of "A" restaurant for each boro
 
 ```{r}
-
+nyc_inspections %>% 
+  drop_na() %>% 
+  filter(grade == "A") %>% 
+  group_by(boro) %>% 
+  summarize(n = n()) %>% 
+  plot_ly(x = ~boro, y =~n, type = "scatter", mode = "lines")
 ```
 
