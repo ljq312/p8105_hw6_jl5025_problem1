@@ -47,11 +47,20 @@ ggplotly(bar_ggplot)
 ```
 
 ```{r}
-### Plot 2:
+### Plot 2: plotly boxplot
+nyc_inspections %>% 
+  mutate(boro = fct_reorder(boro, score)) %>% 
+  plot_ly(y =~ score, color =~ boro, type = "box", colors = "Set1")
 ```
 
 ```{r}
-### Plot 3:
+### Plot 3: plotly line plot
+nyc_inspections %>% 
+  drop_na() %>% 
+  filter(grade == "A") %>% 
+  group_by(boro) %>% 
+  summarize(n = n()) %>% 
+  plot_ly(x = ~boro, y =~n, type = "scatter", mode = "lines")
 ```
 
 
