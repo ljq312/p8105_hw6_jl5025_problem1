@@ -4,9 +4,24 @@ author: "Jiaqi Li"
 date: "11/14/2017"
 output: html_document
 ---
-
+```{r}
+library(tidyverse)
+library(janitor)
+library(stringr)
+library(forcats)
+library(viridis)
+library(plotly)
+library(readr)
+```
 ### Problem 1
 -----------------------------------------------------------------------
+```{r load data}
+nyc_inspections <- read_csv("./data/DOHMH_New_York_City_Restaurant_Inspection_Results.csv.gz", 
+                           col_types = cols(building = col_character()),
+                           na = c("NA", "N/A")) %>% 
+  mutate(boro = str_to_title(boro))
+```
+
 ```{r}
 
 ```
