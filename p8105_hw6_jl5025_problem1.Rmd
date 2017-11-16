@@ -54,13 +54,15 @@ nyc_inspections %>%
 ```
 
 ```{r}
-### Plot 3: plotly line plot
+### Plot 3: plotly bar chart
 nyc_inspections %>% 
-  drop_na() %>% 
-  filter(grade == "A") %>% 
-  group_by(boro) %>% 
+  group_by(boro, grade) %>% 
   summarize(n = n()) %>% 
-  plot_ly(x = ~boro, y =~n, type = "scatter", mode = "lines")
+  spread(key = grade, value = n) %>% 
+  plot_ly( x = ~boro, y =~A, type = 'bar', name = 'A') %>% 
+  add_trace(y =~B, name = "B") %>%
+  add_trace(y =~C, name = "C") %>% 
+  layout(yaxis = list(title = 'Count'), barmode = 'stack')
 ```
 
 
