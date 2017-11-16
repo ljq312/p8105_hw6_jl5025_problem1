@@ -41,7 +41,7 @@ inspection_words =
 
 inspection_words %>% 
   count(word, sort = TRUE) %>% 
-  top_n(25) %>% 
+  top_n(10) %>% 
   mutate(word = fct_reorder(word, n)) %>% 
   plot_ly(x =~word, y =~n, type = "bar", color = ~word)
 
