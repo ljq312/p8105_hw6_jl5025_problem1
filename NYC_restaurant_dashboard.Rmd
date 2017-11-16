@@ -35,16 +35,22 @@ nyc_inspections <- read_csv("./data/DOHMH_New_York_City_Restaurant_Inspection_Re
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Chart A
+### The 25 most frequently used words in "Violation description"
 
 ```{r}
-bar_ggplot <- nyc_inspections %>% 
- # mutate(boro = fct_reorder(boro, score)) %>% 
-  ggplot(aes(x = boro, fill = grade)) +
-    geom_bar() +
-    labs(title = "")
-  
-ggplotly(bar_ggplot)
+inspection_words = nyc_inspections %>% 
+  unnest_tokens(word, violation_description)
+
+data(stop_words)
+
+inspection_words = 
+  anti_join(inspection_words, stop_words)
+
+inspection_words %>% 
+  count(word, sort = TRUE) %>% 
+  top_n(25) %>% 
+  mutate(word = fct_reorder(word, n)) %>% 
+  plot_ly(x =~word, y =~n, type = "bar", color = ~word)
 ```
 
 Column {data-width=350}
