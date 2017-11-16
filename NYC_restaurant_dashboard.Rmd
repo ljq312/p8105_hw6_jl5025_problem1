@@ -17,6 +17,7 @@ library(plotly)
 library(readr)
 library(dplyr)
 library(tidytext)
+library(shiny)
 ```
 
 ```{r}
@@ -30,6 +31,7 @@ nyc_inspections <- read_csv("./data/DOHMH_New_York_City_Restaurant_Inspection_Re
          inspection_num = row_number()) %>%
   select(inspection_num, boro, grade, score, critical_flag, dba, cuisine_description, zipcode, violation_description)
 ```
+
 Column {data-width=650}
 -----------------------------------------------------------------------
 
@@ -56,14 +58,16 @@ nyc_inspections %>%
   plot_ly(y =~ score, color =~ boro, type = "box", colors = "Set1")
 ```
 
-### The number of "A" restaurant for each boro
+### The number of "A"/"B"/"C" restaurants for each boro
 
 ```{r}
 nyc_inspections %>% 
-  drop_na() %>% 
-  filter(grade == "A") %>% 
-  group_by(boro) %>% 
+  group_by(boro, grade) %>% 
   summarize(n = n()) %>% 
-  plot_ly(x = ~boro, y =~n, type = "scatter", mode = "lines")
+  spread(key = grade, value = n) %>% 
+  plot_ly( x = ~boro, y =~A, type = 'bar', name = 'A') %>% 
+  add_trace(y =~B, name = "B") %>%
+  add_trace(y =~C, name = "C") %>% 
+  layout(yaxis = list(title = 'Count'), barmode = 'stack')
 ```
 
