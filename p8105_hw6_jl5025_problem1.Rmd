@@ -48,10 +48,16 @@ inspection_words %>%
 ```
 
 ```{r}
-### Plot 2: plotly boxplot
-nyc_inspections %>% 
-  mutate(boro = fct_reorder(boro, score)) %>% 
-  plot_ly(y =~ score, color =~ boro, type = "box", colors = "Set1")
+### Plot 2: plotly donut chart
+nyc_inspections %>%
+  group_by(grade) %>%
+  summarize(count = n()) %>%
+  plot_ly(labels = ~grade, values = ~count) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "Donut charts using Plotly",  showlegend = F,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
 ```
 
 ```{r}
