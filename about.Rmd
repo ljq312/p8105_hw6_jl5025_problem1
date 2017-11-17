@@ -3,13 +3,4 @@ title: "p8105_hw6"
 author: Jiaqi Li and Leiyu Yue
 ---
 
-In Problems 1 and 2, I worked with Leiyu Yue (UNI: ly2428).
 
-### Problem 1
-
-The GitHub repo containing our solution to this problem is [here](https://github.com/ljq312/p8105_hw6_jl5025_problem1).
-
-
-### Problem 2
-
-The GitHub repo containing the solution to this problem is [here](https://github.com/ljq312/p8105_hw6_jl5025_problem2)
