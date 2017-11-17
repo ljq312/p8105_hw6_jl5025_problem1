@@ -26,7 +26,7 @@ nyc_inspections <- read_csv("./data/DOHMH_New_York_City_Restaurant_Inspection_Re
          boro != "Missing") %>% 
   mutate(boro = str_to_title(boro),
          inspection_num = row_number()) %>%
-  select(inspection_num, boro, grade, score, critical_flag, dba, cuisine_description, zipcode, violation_description)
+  select(inspection_num, boro, grade, cuisine_description, violation_description)
 ```
 
 ```{r}
@@ -41,7 +41,7 @@ inspection_words =
 
 inspection_words %>% 
   count(word, sort = TRUE) %>% 
-  top_n(10) %>% 
+  head(10) %>% 
   mutate(word = fct_reorder(word, n)) %>% 
   plot_ly(x =~word, y =~n, type = "bar", color = ~word)
 

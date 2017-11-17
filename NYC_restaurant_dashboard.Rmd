@@ -29,13 +29,13 @@ nyc_inspections <- read_csv("./data/DOHMH_New_York_City_Restaurant_Inspection_Re
          boro != "Missing") %>% 
   mutate(boro = str_to_title(boro),
          inspection_num = row_number()) %>%
-  select(inspection_num, boro, grade, score, critical_flag, dba, cuisine_description, zipcode, violation_description)
+  select(inspection_num, boro, grade, cuisine_description, violation_description)
 ```
 
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### The 10 most frequently used words in "Violation description"
+### The 10 most frequently used words in "violation description"
 
 ```{r}
 inspection_words = nyc_inspections %>% 
@@ -48,37 +48,38 @@ inspection_words =
 
 inspection_words %>% 
   count(word, sort = TRUE) %>% 
-  top_n(10) %>% 
+  head(10) %>% 
   mutate(word = fct_reorder(word, n)) %>% 
-  plot_ly(x =~word, y =~n, type = "bar", color = ~word)
+  plot_ly(x = ~word, y = ~n, type = "bar", color = ~word)
 ```
 
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### The percentage of "A","B","C" restaurants in NYC
+### The percentage of grade A, B, C restaurants in NYC
 
 ```{r}
 nyc_inspections %>%
   group_by(grade) %>%
   summarize(count = n()) %>%
+  mutate(percentage = paste(round(count/sum(count), 2)*100, "%")) %>% 
   plot_ly(labels = ~grade, values = ~count) %>%
   add_pie(hole = 0.6) %>%
-  layout(title = "Donut charts using Plotly",  showlegend = F,
+  layout(showlegend = T,
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
 ```
 
-### The number of "A"/"B"/"C" restaurants for each boro
+### Number of grade A, B, C restaurants for each boro
 
 ```{r}
 nyc_inspections %>% 
   group_by(boro, grade) %>% 
   summarize(n = n()) %>% 
   spread(key = grade, value = n) %>% 
-  plot_ly( x = ~boro, y =~A, type = 'bar', name = 'A') %>% 
-  add_trace(y =~B, name = "B") %>%
-  add_trace(y =~C, name = "C") %>% 
+  plot_ly( x = ~boro, y = ~A, type = 'bar', name = 'A') %>% 
+  add_trace(y = ~B, name = "B") %>%
+  add_trace(y = ~C, name = "C") %>% 
   layout(yaxis = list(title = 'Count'), barmode = 'stack')
 ```
 
