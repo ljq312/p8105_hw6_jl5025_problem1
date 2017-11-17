@@ -3,8 +3,10 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "dashboard"
+    - text: "Flexdashboard"
       href: NYC_restaurant_dashboard.html
+    - text: "Shiny"
+      href: https://ljq312.shinyapps.io/p8105_hw6_jl5025_problem2/
     - icon: fa-envelope fa-lg
       href: mailto:<you@youremail.com>
     - icon: fa-github fa-lg
