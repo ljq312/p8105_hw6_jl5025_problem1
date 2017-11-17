@@ -233,12 +233,12 @@ We made 3 plots to visualize our analysis:</p>
 <hr />
 <p>The GitHub repo containing the solution to this problem is <a href="https://github.com/ljq312/p8105_hw6_jl5025_problem2">here</a>.<br />
 <br />
-To increase the interaction, we add shiny to the three charts. We set two distinct sidebar widgets. One is “selectInput”, distinguished by “Cuisine description”, naming it as “Select cuisine type”. Another one is “radiobuttons”, distinguished by “boro”, naming it as “Select boro”.</p>
+To increase the interaction, we created a shiny enabled dashboard based on the three charts we made in Problem 1. We set two widget types:</p>
 <ul>
-<li>For the “<strong>Select cuisine type</strong>” widget, we can filter “The 10 most frequently used words in ‘Violation description’ chart” and “The number of “A”/“B”/“C” restaurants for each boro chart” by choosing the cuisine type.<br />
-</li>
-<li>For the “<strong>Select boro</strong>” widget, we can filter “The 10 most frequently used words in ‘Violation description’ chart” and “The percentage of “A”,“B”,“C” restaurants in NYC chart” by choosing boro(Manhattan, Bronx, Brooklyn, Queens, Staten Island).</li>
+<li><p><em>slider inputs</em> for 85 different cuisine types</p></li>
+<li><p><em>radio buttons</em> for 5 distinct boros in NYC</p></li>
 </ul>
+<p>With these two widgets, people can choose a specific cuisine or a particular boro they interested in to view the charts.</p>
 </div>
 
 
